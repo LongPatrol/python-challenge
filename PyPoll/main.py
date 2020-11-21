@@ -28,24 +28,18 @@ with open(csvpath) as csvfile:
      
 winner = canlist[votelist.index(max(votelist))]
 
-#list of percentages of vote
+#list of percentages of vote and index numbers for printing dictionary
 perlist = []
 indxlist =  []
 for vote in votelist:
     perlist.append(round((vote/votecount)*100, 3))
     indxlist.append(votelist.index(vote))
-print(perlist)
-print(indxlist)
 
 #Election dicttionary
 result = {}
 result["Candidate"] = canlist
 result["Percent"] = perlist
 result["Votes"] = votelist
-
-
-#print(result)
-
 
 #printing results
 print("Election Results")
@@ -54,8 +48,22 @@ print(f'Total Votes: {votecount}')
 print("------------------------------")
 for x in indxlist:
     print(f'{result["Candidate"][x]}: {result["Percent"][x]}% ({result["Votes"][x]})')
+print("------------------------------")
+print(f'Winner: {winner}')
+print("------------------------------")
 
-#print(winner)
-#print(canlist)   
-#print(votecount)
-#print(votelist)
+#textfile of results
+txtpath = os.path.join('Analysis', 'analysis.txt')
+with open(txtpath, 'w') as txtfile:
+    txtfile.write(
+    "Election Results"
+    "\n------------------------------"
+    "\n"f'Total Votes: {votecount}'
+    "\n------------------------------")
+    for x in indxlist:
+        txtfile.write("\n"f'{result["Candidate"][x]}: {result["Percent"][x]}% ({result["Votes"][x]})')
+    txtfile.write(
+    "\n------------------------------"
+    "\n"f'Winner: {winner}'
+    "\n------------------------------")
+txtfile.close()
