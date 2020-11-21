@@ -26,8 +26,36 @@ with open(csvpath) as csvfile:
         elif can2 in canlist:
            votelist[canlist.index(can2)] = votelist[canlist.index(can2)] + 1
      
-    winner = canlist[votelist.index(max(votelist))]
-    print(winner)
-    print(canlist)   
-    print(votecount)
-    print(votelist)
+winner = canlist[votelist.index(max(votelist))]
+
+#list of percentages of vote
+perlist = []
+indxlist =  []
+for vote in votelist:
+    perlist.append(round((vote/votecount)*100, 3))
+    indxlist.append(votelist.index(vote))
+print(perlist)
+print(indxlist)
+
+#Election dicttionary
+result = {}
+result["Candidate"] = canlist
+result["Percent"] = perlist
+result["Votes"] = votelist
+
+
+#print(result)
+
+
+#printing results
+print("Election Results")
+print("------------------------------")
+print(f'Total Votes: {votecount}')
+print("------------------------------")
+for x in indxlist:
+    print(f'{result["Candidate"][x]}: {result["Percent"][x]}% ({result["Votes"][x]})')
+
+#print(winner)
+#print(canlist)   
+#print(votecount)
+#print(votelist)
