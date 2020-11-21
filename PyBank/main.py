@@ -6,8 +6,7 @@ import csv
 with open(csvpath) as csvfile:
     csvreader = csv.reader(csvfile, delimiter=',')    
     csv_header = next(csvreader)
-    print(f"CSV Header: {csv_header}")
-
+    
     #count the month from the first row, since we're not including the first row in the loop
     month = 1
     netTotal = 0
@@ -24,7 +23,7 @@ with open(csvpath) as csvfile:
         #Counting the total number of months (row for each month)
        month = month + 1
        netTotal = netTotal + float(row[1]) 
-       difference = float(row[1]) - float(firstline[1])
+       difference = round(float(row[1]) - float(firstline[1]))
 
         #max difference and the month of the max difference
        if difference > maxdiff:
@@ -49,18 +48,25 @@ with open(csvpath) as csvfile:
         return total/count
     avgdiff = round(average(difflist), 2)
 
-    #diffmax = round(max(difflist))
-    #diffmin = round(min(difflist))
-
     #printing out what we want
-    #!!!! need to add the whole sentence structure via fstr
-    print(month)
-    print(netTotal)
-    print(avgdiff)
-    print(mindiff)
-    print(maxdiff)
-    print(maxmonth)
-    print(minmonth)
-    #print(diffmax)
-    #print(diffmin)
+    print("Financial Analysis")
+    print("-----------------------")
+    print(f'Total Months: {month}')
+    print(f'Total: ${netTotal}')
+    print(f'Average Change: ${avgdiff}')
+    print(f'Greatest Increase in Profits: {maxmonth} (${maxdiff})')
+    print(f'Greatest Decrease in Profits: {minmonth} (${mindiff})')
   
+#write out to a text file
+txtpath = os.path.join('Analysis', 'analysis.txt')
+
+with open(txtpath, 'w') as txtfile:
+    txtfile.write(
+    "Financial Analysis"
+    "\n-----------------------"
+    "\n"f'Total Months: {month}' 
+    "\n"f'Total: ${netTotal}'
+    "\n"f'Average Change: ${avgdiff}'
+    "\n"f'Greatest Increase in Profits: {maxmonth} (${maxdiff})' 
+    "\n"f'Greatest Decrease in Profits: {minmonth} (${mindiff})')
+txtfile.close()
