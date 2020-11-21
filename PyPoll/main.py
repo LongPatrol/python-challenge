@@ -9,6 +9,7 @@ with open(csvpath) as csvfile:
 
     votecount = 1
     canlist = []
+    votelist = [1]
     firstline = next(csvreader)
     candidate = str(firstline[2])
     canlist.append(candidate)
@@ -19,8 +20,14 @@ with open(csvpath) as csvfile:
         can2 = str(row[2])
         if can2 not in canlist:
             canlist.append(can2)
-            
+            votelist.append(1)
 
-    #print(row[2])
+        #votes for each candidate
+        elif can2 in canlist:
+           votelist[canlist.index(can2)] = votelist[canlist.index(can2)] + 1
+     
+    winner = canlist[votelist.index(max(votelist))]
+    print(winner)
     print(canlist)   
     print(votecount)
+    print(votelist)
